@@ -1,12 +1,8 @@
 import "./App.css";
 import { useState } from "react";
 import { validateEmail } from "./utils";
+import PasswordErrorMessage from "./components/ErrorMessage";
 
-const PasswordErrorMessage = () => { 
-  return (
-    <p className="FieldError">Password should have at least 8 characters</p>
-  );
-};
 
 function App() {
   const [firstName, setFirstName] = useState("");
@@ -16,11 +12,10 @@ function App() {
     value: "",
     isTouched: false,
   });
-
   const [role, setRole] = useState("role");
 
+  // Validação
   const getIsFormValid = () => {
-
     return (
       firstName &&
       validateEmail(email) &&
@@ -29,6 +24,7 @@ function App() {
     )
   };
 
+  // Limpar Form após Submit
   const clearForm = () => {
     setFirstName("");
     setLastName("");
@@ -37,6 +33,7 @@ function App() {
     setRole("role")
   };
 
+  // Resolvendo o Submit Button
   const handleSubmit = (e) => {
     e.preventDefault();
     alert("Account created!");
@@ -49,6 +46,7 @@ function App() {
         <fieldset>
           <h2>Sign Up</h2>
 
+          {/* FIRIST NAME */}
           <div
             className="Field">
             <label>
@@ -60,6 +58,7 @@ function App() {
               onChange={e => setFirstName(e.target.value)} />
           </div>
 
+{/* LAST NAME */}
           <div className="Field">
             <label>Last name</label>
             <input
@@ -68,6 +67,7 @@ function App() {
               onChange={e => setLastName(e.target.value)} />
           </div>
 
+{/* E-MAIL */}
           <div className="Field">
             <label>
               Email address <sup>*</sup>
@@ -79,6 +79,7 @@ function App() {
               onChange={e => setEmail(e.target.value)} />
           </div>
 
+{/* PASSWORD */}
           <div className="Field">
             <label>
               Password <sup>*</sup>
@@ -87,12 +88,13 @@ function App() {
               type="password"
               placeholder="Password"
               value={password.value}
-              onChange={e => setPassword({ ...password, value: e.target.value, isTouched: false})}
+              onChange={e => setPassword({ ...password, value: e.target.value, isTouched: false })}
               onBlur={e => setPassword({ ...password, isTouched: true })}
             />
-            {password.isTouched && password.value.length < 8 ? <PasswordErrorMessage /> : null }
+            {password.isTouched && password.value.length < 8 ? <PasswordErrorMessage /> : null}
           </div>
 
+{/* ROLE */}
           <div className="Field">
             <label>
               Role <sup>*</sup>
@@ -106,6 +108,7 @@ function App() {
             </select>
           </div>
 
+{/* BUTTON */}
           <button type="submit" disabled={!getIsFormValid()}>
             Create account
           </button>
